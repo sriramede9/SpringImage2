@@ -2,6 +2,7 @@ package com.img.controller;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.img.dao.Imgdao;
 import com.img.model.Studentimg;
 
 @Controller
 public class Homecontroller {
 
-	Studentimg simg = new Studentimg();
+	@Autowired
+	Imgdao imgdao;
 
 	@GetMapping("/hi")
 	public String home() {
@@ -28,6 +31,8 @@ public class Homecontroller {
 
 	@GetMapping("/form")
 	public String studentform(Model model) {
+
+		Studentimg simg = new Studentimg();
 
 		model.addAttribute("sone", simg);
 
@@ -64,17 +69,20 @@ public class Homecontroller {
 
 	@RequestMapping(value = "/addproduct", method = RequestMethod.POST, consumes = {
 			MediaType.MULTIPART_FORM_DATA_VALUE })
-	public String addProdt(@ModelAttribute Studentimg p, BindingResult bindingResult,@RequestParam MultipartFile file) throws IOException {
+	public String addProdt(@ModelAttribute Studentimg p, BindingResult bindingResult, @RequestParam MultipartFile file)
+			throws IOException {
 
-		//bindingResult.
-		
-		//System.out.println(p);
+		// bindingResult.
+
+		// System.out.println(p);
 		System.out.println(file.getBytes());
-		
+
 		p.setFile(file.getBytes());
-		
+
 		System.out.println(p);
-		
+
+		imgdao.addStudentimg(p);
+
 		return "hello";
 
 	}

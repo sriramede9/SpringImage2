@@ -2,17 +2,26 @@ package com.img.model;
 
 import java.util.Arrays;
 
-import org.springframework.web.multipart.MultipartFile;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 
+@Entity
 public class Studentimg {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	private String firstname;
 
 	private String lastname;
 
+	@Lob
 	private byte[] file;
+
 //	
 //	
 //
@@ -21,6 +30,7 @@ public class Studentimg {
 	public byte[] getFile() {
 		return file;
 	}
+
 //
 	public void setFile(byte[] file) {
 		this.file = file;
@@ -42,8 +52,6 @@ public class Studentimg {
 		return "Studentimg [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", file="
 				+ Arrays.toString(file) + "]";
 	}
-	
-	
 
 	public int getId() {
 		return id;
